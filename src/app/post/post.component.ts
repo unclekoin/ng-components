@@ -1,13 +1,19 @@
 import {
   AfterContentChecked,
-  AfterContentInit, AfterViewChecked, AfterViewInit,
+  AfterContentInit,
+  AfterViewChecked,
+  AfterViewInit,
+  ChangeDetectionStrategy,
   Component,
   ContentChild,
   DoCheck,
-  ElementRef, EventEmitter,
+  ElementRef,
+  EventEmitter,
   Input,
-  OnChanges, OnDestroy,
-  OnInit, Output,
+  OnChanges,
+  OnDestroy,
+  OnInit,
+  Output,
   SimpleChanges
 } from '@angular/core';
 import { IPost } from '../app.component';
@@ -15,7 +21,8 @@ import { IPost } from '../app.component';
 @Component({
   selector: 'app-post',
   templateUrl: './post.component.html',
-  styleUrls: ['./post.component.scss']
+  styleUrls: ['./post.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 
 export class PostComponent
@@ -26,7 +33,8 @@ export class PostComponent
     AfterContentChecked,
     AfterViewInit,
     AfterViewChecked,
-    OnDestroy {
+    OnDestroy
+{
   @Input() post!: IPost;
   @Output() onRemove = new EventEmitter<number>();
   @ContentChild('info', { static: true }) infoRef!: ElementRef;
@@ -45,8 +53,8 @@ export class PostComponent
   }
 
   ngOnInit() {
+    console.log('ngOnInit');
     if (this.infoRef) {
-      console.log('ngOnInit');
       // console.log(this.infoRef.nativeElement);
     }
   }
