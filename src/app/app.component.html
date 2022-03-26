@@ -8,6 +8,7 @@
   <app-post
     *ngFor="let p of posts"
     [post]="p"
+    (onRemove)="removePost($event)"
   >
     <div #info>
       <small *ngIf="p.text.length > 30; else short" class="text-warning">This is a normal length post</small>

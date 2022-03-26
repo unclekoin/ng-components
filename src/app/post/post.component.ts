@@ -1,4 +1,15 @@
-import { Component, ContentChild, ElementRef, Input } from '@angular/core';
+import {
+  AfterContentChecked,
+  AfterContentInit, AfterViewChecked, AfterViewInit,
+  Component,
+  ContentChild,
+  DoCheck,
+  ElementRef, EventEmitter,
+  Input,
+  OnChanges, OnDestroy,
+  OnInit, Output,
+  SimpleChanges
+} from '@angular/core';
 import { IPost } from '../app.component';
 
 @Component({
@@ -6,17 +17,61 @@ import { IPost } from '../app.component';
   templateUrl: './post.component.html',
   styleUrls: ['./post.component.scss']
 })
-export class PostComponent {
-  @Input() post: IPost;
-  @ContentChild('info', {static: true}) infoRef!: ElementRef;
 
-  constructor() {
-    this.post = { title: '', text: '' };
+export class PostComponent
+  implements OnInit,
+    OnChanges,
+    DoCheck,
+    AfterContentInit,
+    AfterContentChecked,
+    AfterViewInit,
+    AfterViewChecked,
+    OnDestroy {
+  @Input() post!: IPost;
+  @Output() onRemove = new EventEmitter<number>();
+  @ContentChild('info', { static: true }) infoRef!: ElementRef;
+
+  // constructor() {
+  //   console.log('constructor');
+  //   this.post = { title: '', text: '' };
+  // }
+
+  public removePost() {
+    this.onRemove.emit(this.post.id);
+  }
+
+  ngOnChanges(changes: SimpleChanges) {
+    console.log('ngOnChanges', changes);
   }
 
   ngOnInit() {
     if (this.infoRef) {
-      console.log(this.infoRef.nativeElement);
+      console.log('ngOnInit');
+      // console.log(this.infoRef.nativeElement);
     }
+  }
+
+  ngDoCheck() {
+    console.log('ngDoCheck');
+  }
+
+  ngAfterContentInit() {
+    console.log('ngAfterContentInit');
+  }
+
+  ngAfterContentChecked() {
+    console.log('ngAfterContentChecked');
+  }
+
+  ngAfterViewInit() {
+    console.log('ngAfterViewInit');
+  }
+
+  ngAfterViewChecked() {
+    console.log('ngAfterViewChecked');
+  }
+
+  ngOnDestroy() {
+    console.log('ngOnDestroy');
   }
 }
